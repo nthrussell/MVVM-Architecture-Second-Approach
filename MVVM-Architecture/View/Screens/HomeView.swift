@@ -33,9 +33,10 @@ class HomeView: UIView {
     }()
     
     var onTap: ((_ url:String) -> Void)?
-    var presenter: HomePresenter!
-    
-    override init(frame: CGRect) {
+    var viewModel: HomeViewModel!
+
+    init(frame: CGRect = .zero, viewModel: HomeViewModel) {
+        self.viewModel = viewModel
         super.init(frame: frame)
         backgroundColor = .white
         
@@ -75,8 +76,7 @@ class HomeView: UIView {
 
 extension HomeView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let presenter = presenter else { return 0 }
-        return presenter.numberOfRowsInSection()
+        return viewModel.numberOfRowsInSection()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -85,18 +85,17 @@ extension HomeView: UITableViewDataSource {
             for: indexPath
         ) as! HomeViewCell
         
-        guard let presenter = presenter else { return cell }
         
-        let data = presenter.rowAt(indexPath: indexPath)
+        let data = viewModel.rowAt(indexPath: indexPath)
         cell.nameLabel.text = data.name
         
-        if (indexPath.row == presenter.pokemonList.count - 1) && (!presenter.isFiltering){
+        if (indexPath.row == viewModel.pokemonList.count - 1) && (!viewModel.isFiltering){
             tableView.tableFooterView = activityindicatorView
             activityindicatorView.startAnimating()
-            presenter.fetchMoreData()
+            viewModel.fetchMoreData()
         }
         
-        if presenter.isFiltering { activityindicatorView.stopAnimating() }
+        if viewModel.isFiltering { activityindicatorView.stopAnimating() }
         
         return cell
     }
@@ -108,8 +107,7 @@ extension HomeView: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let presenter = presenter else { return }
-        let data = presenter.rowAt(indexPath: indexPath)
+        let data = viewModel.rowAt(indexPath: indexPath)
 
         if let onTap = onTap {
             onTap(data.url)
@@ -119,7 +117,6 @@ extension HomeView: UITableViewDelegate {
 
 extension HomeView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String) {
-        guard let presenter = presenter else { return }
-        presenter.filterData(with: textSearched)
+        viewModel.filterData(with: textSearched)
     }
 }

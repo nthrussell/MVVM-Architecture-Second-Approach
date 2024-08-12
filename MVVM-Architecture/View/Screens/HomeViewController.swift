@@ -10,23 +10,50 @@ import Combine
 
 class HomeViewController: UIViewController {
     
-    var homeView = HomeView()
+    let viewModel = HomeViewModel()
+    var homeView: HomeView!
+    var cancellable = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         navigationController?.navigationBar.topItem?.title = "Pokedex"
-        setupPresenter()
+        
+        bindPokemonList()
+        bindFilteredData()
+    }
+    
+    func bindPokemonList() {
+        viewModel
+            .$pokemonList
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self else { return }
+                if result.count > 0 {
+                    self.homeView.tableView.reloadData()
+                }
+            }
+            .store(in: &cancellable)
+    }
+    
+    func bindFilteredData() {
+        viewModel
+            .$filteredData
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self else { return }
+                if result.count > 0 {
+                    self.homeView.tableView.reloadData()
+                }
+            }
+            .store(in: &cancellable)
+
     }
     
     override func loadView() {
+        homeView = HomeView(viewModel: viewModel)
         self.view = homeView
-    }
-    
-    private func setupPresenter() {
-        let presenter = HomePresenter(homeView: homeView)
-        homeView.presenter = presenter
     }
     
     override func viewDidAppear(_ animated: Bool) {
