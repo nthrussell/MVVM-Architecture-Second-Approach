@@ -1,45 +1,30 @@
 //
-//  DetailPresenter.swift
+//  DetailViewModel.swift
 //  MVVM-Architecture
 //
-//  Created by russel on 12/8/24.
+//  Created by russel on 15/8/24.
 //
 
 import Foundation
 import Combine
 
-class DetailPresenter {
+class DetailViewModel {
     var url: String
-    var detailView: DetailView!
     var detailApiService: DetailApiService
     var detailStorageService: DetailStorageService
-    var data: PokemonDetailModel?
+    
+    @Published var data: PokemonDetailModel?
     var cancellable = Set<AnyCancellable>()
         
     init(url: String,
-         detailview: DetailView,
          detailApiService: DetailApiService = DefaultDetailApiService(),
          detailStorageService: DetailStorageService = DefaultDetailStorageService()
     ) {
         self.url = url
-        self.detailView = detailview
         self.detailApiService = detailApiService
         self.detailStorageService = detailStorageService
         
         callApi()
-        observeOnTap()
-    }
-    
-    func observeOnTap() {
-        detailView.onTap = { [weak self] data in
-            guard let self = self else { return }
-            self.detailStorageService.saveOrDelete(with: data)
-        }
-    }
-    
-    func checkIfPokemonIsInFavouriteList(data: PokemonDetailModel) {
-        let data = detailStorageService.checkIfFavourite(data: data)
-        detailView.favouriteButton.isSelected = data ? true : false
     }
     
     func callApi() {
@@ -51,10 +36,18 @@ class DetailPresenter {
             } receiveValue: { [weak self] data in
                 guard let self = self else { return }
                 self.data = data
-                detailView.updateUI(data: data)
-                checkIfPokemonIsInFavouriteList(data: data)
                 Loader.hide()
             }
             .store(in: &cancellable)
     }
+    
+    func checkIfFavourite(data: PokemonDetailModel) -> Bool {
+        let data = detailStorageService.checkIfFavourite(data: data)
+        return data
+    }
+    
+    func saveOrDelete(data: PokemonDetailModel) {
+        detailStorageService.saveOrDelete(with: data)
+    }
+    
 }

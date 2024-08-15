@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import Combine
 
 class DetailViewController: UIViewController {
     
     var url: String
     var detailView = DetailView()
+    var viewModel: DetailViewModel!
+    
+    var cancellable = Set<AnyCancellable>()
         
     init(url: String) {
         self.url = url
@@ -25,6 +29,11 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         Loader.show()
+        viewModel = DetailViewModel(url: url)
+        detailView.viewModel = viewModel
+        
+        observeData()
+        observeOnTap()
     }
     
     override func loadView() {
@@ -32,7 +41,7 @@ class DetailViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        setupPresenter()
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -44,8 +53,25 @@ class DetailViewController: UIViewController {
         set { super.hidesBottomBarWhenPushed = newValue }
     }
     
-    private func setupPresenter() {
-        let presenter = DetailPresenter(url: url, detailview: detailView)
-        detailView.presenter = presenter
+    func observeData() {
+        viewModel
+            .$data
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self else { return }
+                if let data = result {
+                    detailView.updateUI(data: data)
+                    let value = viewModel.checkIfFavourite(data: data)
+                    detailView.favouriteButton.isSelected = value
+                }
+            }
+            .store(in: &cancellable)
+    }
+    
+    func observeOnTap() {
+        detailView.onTap = { [weak self] data in
+            guard let self = self else { return }
+            viewModel.saveOrDelete(data: data)
+        }
     }
 }

@@ -58,7 +58,7 @@ class DetailView: UIView {
     }()
     
     var onTap: ((_ data:PokemonDetailModel) -> Void)?
-    var presenter: DetailPresenter!
+    var viewModel: DetailViewModel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -133,7 +133,7 @@ class DetailView: UIView {
     @objc
     func tapAction() {
         favouriteButton.isSelected.toggle()
-        if let data = presenter.data {
+        if let data = viewModel.data {
             if let onTap = onTap {
                 onTap(data)
             }

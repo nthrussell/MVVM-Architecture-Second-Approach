@@ -6,13 +6,11 @@
 //
 
 import UIKit
-import Combine
 
 class HomeViewController: UIViewController {
     
     let viewModel = HomeViewModel()
     var homeView: HomeView!
-    var cancellable = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
