@@ -18,8 +18,7 @@ class FavouriteView: UIView {
         return tableView
     }()
     
-    var tapDelete: ((_ model: PokemonDetailModel) -> Void)?
-    var presenter: FavouritePresenter!
+    var viewModel: FavouriteViewModel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,8 +46,8 @@ class FavouriteView: UIView {
 
 extension FavouriteView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let presenter = presenter else { return 0 }
-        return presenter.detailData.count
+        guard let viewModel = viewModel else { return 0 }
+        return viewModel.detailData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,8 +56,8 @@ extension FavouriteView: UITableViewDataSource {
             for: indexPath
         ) as! FavouriteViewCell
         
-        guard let presenter = presenter else { return cell }
-        let data = presenter.detailData[indexPath.row]
+        guard let viewModel = viewModel else { return cell }
+        let data = viewModel.detailData[indexPath.row]
         
         if let url = data.sprites.frontDefault, (url != "") {
             cell.cellImageView.getImage(from: URL(string: url)!)
@@ -76,10 +75,9 @@ extension FavouriteView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let data = presenter.detailData[indexPath.row]
-            if let tapDelete = tapDelete {
-                tapDelete(data)
-            }
+            guard let viewModel = viewModel else { return }
+            let data = viewModel.detailData[indexPath.row]
+            viewModel.deleteFavourite(data: data)
         }
     }
 }

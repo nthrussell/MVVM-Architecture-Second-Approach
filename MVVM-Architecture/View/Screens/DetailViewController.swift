@@ -33,15 +33,10 @@ class DetailViewController: UIViewController {
         detailView.viewModel = viewModel
         
         observeData()
-        observeOnTap()
     }
     
     override func loadView() {
         self.view = detailView
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -66,12 +61,5 @@ class DetailViewController: UIViewController {
                 }
             }
             .store(in: &cancellable)
-    }
-    
-    func observeOnTap() {
-        detailView.onTap = { [weak self] data in
-            guard let self = self else { return }
-            viewModel.saveOrDelete(data: data)
-        }
     }
 }

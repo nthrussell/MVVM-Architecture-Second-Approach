@@ -49,5 +49,4 @@ class DetailViewModel {
     func saveOrDelete(data: PokemonDetailModel) {
         detailStorageService.saveOrDelete(with: data)
     }
-    
 }
