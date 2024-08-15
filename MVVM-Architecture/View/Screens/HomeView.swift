@@ -33,8 +33,8 @@ class HomeView: UIView {
         return aiView
     }()
     
-    var onTap: ((_ url:String) -> Void)?
     var viewModel: HomeViewModel!
+    var onTap: ((_ url:String) -> Void)?
     
     var cancellable = Set<AnyCancellable>()
 

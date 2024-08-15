@@ -11,7 +11,7 @@ import Combine
 
 class FavouriteViewController: UIViewController {
 
-    var favouriteView = FavouriteView()
+    var favouriteView: FavouriteView!
     var viewModel = FavouriteViewModel()
     
     var cancellable = Set<AnyCancellable>()
@@ -32,7 +32,7 @@ class FavouriteViewController: UIViewController {
     }
     
     override func loadView() {
-        favouriteView.viewModel = viewModel
+        favouriteView = FavouriteView(viewModel: viewModel)
         self.view = favouriteView
     }
     

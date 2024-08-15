@@ -20,7 +20,8 @@ class FavouriteView: UIView {
     
     var viewModel: FavouriteViewModel!
     
-    override init(frame: CGRect) {
+    init(frame: CGRect = .zero, viewModel: FavouriteViewModel) {
+        self.viewModel = viewModel
         super.init(frame: frame)
         backgroundColor = .white
         

@@ -11,7 +11,7 @@ import Combine
 class DetailViewController: UIViewController {
     
     var url: String
-    var detailView = DetailView()
+    var detailView: DetailView!
     var viewModel: DetailViewModel!
     
     var cancellable = Set<AnyCancellable>()
@@ -30,12 +30,12 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view.
         Loader.show()
         viewModel = DetailViewModel(url: url)
-        detailView.viewModel = viewModel
         
         observeData()
     }
     
     override func loadView() {
+        detailView = DetailView(viewModel: viewModel)
         self.view = detailView
     }
     

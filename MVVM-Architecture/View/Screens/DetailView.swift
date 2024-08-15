@@ -59,7 +59,8 @@ class DetailView: UIView {
     
     var viewModel: DetailViewModel!
     
-    override init(frame: CGRect) {
+    init(frame: CGRect = .zero, viewModel: DetailViewModel) {
+        self.viewModel = viewModel
         super.init(frame: frame)
         backgroundColor = .white
         
