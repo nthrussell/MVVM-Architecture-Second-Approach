@@ -23,12 +23,14 @@
 		845451342C6E634A0046D64F /* HomeViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845451332C6E63480046D64F /* HomeViewTest.swift */; };
 		845451362C6E63730046D64F /* DetailViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845451352C6E63720046D64F /* DetailViewTest.swift */; };
 		845451382C6E639A0046D64F /* FavouriteViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845451372C6E639A0046D64F /* FavouriteViewTest.swift */; };
+		8454513A2C6E698C0046D64F /* HomeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845451392C6E69860046D64F /* HomeViewModelTest.swift */; };
+		8454513C2C6E6A880046D64F /* DetailViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8454513B2C6E6A860046D64F /* DetailViewModelTest.swift */; };
+		8454513E2C6E6D0D0046D64F /* FavouriteViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8454513D2C6E6D050046D64F /* FavouriteViewModelTest.swift */; };
 		848E05D12C69AEC90009C9F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 848E05CA2C69AEC90009C9F9 /* Assets.xcassets */; };
 		848E05D42C69AEC90009C9F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E05C92C69AEC90009C9F9 /* AppDelegate.swift */; };
 		848E05D52C69AEC90009C9F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E05CE2C69AEC90009C9F9 /* SceneDelegate.swift */; };
 		848E05D62C69AEC90009C9F9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E05CF2C69AEC90009C9F9 /* ViewController.swift */; };
 		848E05D72C69AEC90009C9F9 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 848E05CC2C69AEC90009C9F9 /* Base */; };
-		848E05DA2C69AECD0009C9F9 /* MVVM_ArchitectureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E05D82C69AECD0009C9F9 /* MVVM_ArchitectureTests.swift */; };
 		848E05DE2C69AED00009C9F9 /* MVVM_ArchitectureUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E05DB2C69AED00009C9F9 /* MVVM_ArchitectureUITests.swift */; };
 		848E05DF2C69AED00009C9F9 /* MVVM_ArchitectureUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848E05DC2C69AED00009C9F9 /* MVVM_ArchitectureUITestsLaunchTests.swift */; };
 		848E05E22C69AF060009C9F9 /* PokemonDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 848E05E02C69AF060009C9F9 /* PokemonDataModel.xcdatamodeld */; };
@@ -95,6 +97,9 @@
 		845451332C6E63480046D64F /* HomeViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewTest.swift; sourceTree = "<group>"; };
 		845451352C6E63720046D64F /* DetailViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewTest.swift; sourceTree = "<group>"; };
 		845451372C6E639A0046D64F /* FavouriteViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewTest.swift; sourceTree = "<group>"; };
+		845451392C6E69860046D64F /* HomeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTest.swift; sourceTree = "<group>"; };
+		8454513B2C6E6A860046D64F /* DetailViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModelTest.swift; sourceTree = "<group>"; };
+		8454513D2C6E6D050046D64F /* FavouriteViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewModelTest.swift; sourceTree = "<group>"; };
 		848E052A2C69AB020009C9F9 /* MVVM-Architecture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MVVM-Architecture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		848E05402C69AB040009C9F9 /* MVVM-ArchitectureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MVVM-ArchitectureTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		848E054A2C69AB040009C9F9 /* MVVM-ArchitectureUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MVVM-ArchitectureUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,7 +109,6 @@
 		848E05CC2C69AEC90009C9F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		848E05CE2C69AEC90009C9F9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		848E05CF2C69AEC90009C9F9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		848E05D82C69AECD0009C9F9 /* MVVM_ArchitectureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVVM_ArchitectureTests.swift; sourceTree = "<group>"; };
 		848E05DB2C69AED00009C9F9 /* MVVM_ArchitectureUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVVM_ArchitectureUITests.swift; sourceTree = "<group>"; };
 		848E05DC2C69AED00009C9F9 /* MVVM_ArchitectureUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MVVM_ArchitectureUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		848E05E12C69AF060009C9F9 /* PokemonDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PokemonDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -162,11 +166,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		845451172C6E60DB0046D64F /* PresenterTest */ = {
+		845451172C6E60DB0046D64F /* ViewModelTest */ = {
 			isa = PBXGroup;
 			children = (
+				845451392C6E69860046D64F /* HomeViewModelTest.swift */,
+				8454513B2C6E6A860046D64F /* DetailViewModelTest.swift */,
+				8454513D2C6E6D050046D64F /* FavouriteViewModelTest.swift */,
 			);
-			path = PresenterTest;
+			path = ViewModelTest;
 			sourceTree = "<group>";
 		};
 		845451182C6E60EB0046D64F /* ViewTest */ = {
@@ -262,8 +269,7 @@
 				8454511A2C6E60F10046D64F /* Mocks */,
 				845451192C6E60EE0046D64F /* ModelTest */,
 				845451182C6E60EB0046D64F /* ViewTest */,
-				845451172C6E60DB0046D64F /* PresenterTest */,
-				848E05D82C69AECD0009C9F9 /* MVVM_ArchitectureTests.swift */,
+				845451172C6E60DB0046D64F /* ViewModelTest */,
 			);
 			path = "MVVM-ArchitectureTests";
 			sourceTree = "<group>";
@@ -590,16 +596,18 @@
 				8454512E2C6E623B0046D64F /* DetailStorageServiceTest.swift in Sources */,
 				8454512C2C6E62190046D64F /* FavouriteStorageServiceTest.swift in Sources */,
 				845451282C6E61DB0046D64F /* MockFavouriteStorageService.swift in Sources */,
+				8454513C2C6E6A880046D64F /* DetailViewModelTest.swift in Sources */,
+				8454513A2C6E698C0046D64F /* HomeViewModelTest.swift in Sources */,
 				845451362C6E63730046D64F /* DetailViewTest.swift in Sources */,
 				845451382C6E639A0046D64F /* FavouriteViewTest.swift in Sources */,
 				845451342C6E634A0046D64F /* HomeViewTest.swift in Sources */,
 				845451202C6E615F0046D64F /* StorageProvider+Extension.swift in Sources */,
 				845451222C6E61810046D64F /* DetailApiServiceStub.swift in Sources */,
 				845451302C6E62590046D64F /* DetailApiServiceTest.swift in Sources */,
+				8454513E2C6E6D0D0046D64F /* FavouriteViewModelTest.swift in Sources */,
 				845451242C6E619A0046D64F /* HomeApiServiceStub.swift in Sources */,
 				8454512A2C6E61F80046D64F /* MockDetailStorageService.swift in Sources */,
 				8454511E2C6E613A0046D64F /* DecodedPokemonListModel.swift in Sources */,
-				848E05DA2C69AECD0009C9F9 /* MVVM_ArchitectureTests.swift in Sources */,
 				845451262C6E61B60046D64F /* NetworkProviderStub.swift in Sources */,
 				845451322C6E62830046D64F /* HomeApiServiceTest.swift in Sources */,
 			);
