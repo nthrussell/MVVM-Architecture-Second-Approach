@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class HomeView: UIView {
     private(set) lazy var searchBar:UISearchBar = {
@@ -34,6 +35,8 @@ class HomeView: UIView {
     
     var onTap: ((_ url:String) -> Void)?
     var viewModel: HomeViewModel!
+    
+    var cancellable = Set<AnyCancellable>()
 
     init(frame: CGRect = .zero, viewModel: HomeViewModel) {
         self.viewModel = viewModel
@@ -44,6 +47,9 @@ class HomeView: UIView {
         addSubview(tableView)
         
         setupLayout()
+        
+        bindPokemonList()
+        bindFilteredData()
     }
     
     required init?(coder: NSCoder) {
@@ -65,6 +71,31 @@ class HomeView: UIView {
             tableView.rightAnchor.constraint(equalTo: rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+    
+    func bindPokemonList() {
+        viewModel
+            .$pokemonList
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self else { return }
+                if result.count > 0 {
+                    tableView.reloadData()
+                }
+            }
+            .store(in: &cancellable)
+    }
+    
+    func bindFilteredData() {
+        viewModel
+            .$filteredData
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self else { return }
+                tableView.reloadData()
+            }
+            .store(in: &cancellable)
+
     }
     
     func reloadTebleView() {

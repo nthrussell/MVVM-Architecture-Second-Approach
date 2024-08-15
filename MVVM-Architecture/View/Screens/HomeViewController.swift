@@ -19,36 +19,6 @@ class HomeViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         navigationController?.navigationBar.topItem?.title = "Pokedex"
-        
-        bindPokemonList()
-        bindFilteredData()
-    }
-    
-    func bindPokemonList() {
-        viewModel
-            .$pokemonList
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                guard let self else { return }
-                if result.count > 0 {
-                    self.homeView.tableView.reloadData()
-                }
-            }
-            .store(in: &cancellable)
-    }
-    
-    func bindFilteredData() {
-        viewModel
-            .$filteredData
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                guard let self else { return }
-                if result.count > 0 {
-                    self.homeView.tableView.reloadData()
-                }
-            }
-            .store(in: &cancellable)
-
     }
     
     override func loadView() {
