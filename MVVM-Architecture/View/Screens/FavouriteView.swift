@@ -52,7 +52,7 @@ extension FavouriteView {
         viewModel
             .$detailData
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
+            .sink { [weak self] _ in
                 guard let self else { return }
                 tableView.reloadData()
             }

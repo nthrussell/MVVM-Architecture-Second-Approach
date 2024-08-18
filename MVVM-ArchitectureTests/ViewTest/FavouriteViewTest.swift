@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import Combine
 
 @testable import MVVM_Architecture
 
@@ -13,6 +14,7 @@ class FavouriteViewTest: XCTestCase {
     var sut: FavouriteView!
     var viewModel: FavouriteViewModel!
     var mockStorageService: MockFavouriteStorageService!
+    var cancellable = Set<AnyCancellable>()
     
     override func setUpWithError() throws {
         mockStorageService = MockFavouriteStorageService()
@@ -61,5 +63,34 @@ class FavouriteViewTest: XCTestCase {
         let indexPath = IndexPath(row: 2, section: 0)
         let cell = sut.tableView.dataSource?.tableView(sut.tableView, cellForRowAt: indexPath)
         XCTAssertNotNil(cell)
+    }
+    
+    func test_if_viewModel_detailData_sends_newData_successfully() {
+        let firstData = PokemonDetailModel(
+            height: 6,
+            name: "bulbasaur",
+            sprites: SpritesModel(frontDefault: "https://pokeapi.co/api/v2/pokemon/1/"),
+            weight: 8)
+        
+        let secondData = PokemonDetailModel(
+            height: 4,
+            name: "ivysaur",
+            sprites: SpritesModel(frontDefault: "https://pokeapi.co/api/v2/pokemon/2/"),
+            weight: 5)
+        
+        let expectation = XCTestExpectation(description: "Received New PokemonDetailModel data")
+        
+        sut.viewModel
+            .$detailData
+            .sink { status in
+                XCTAssertTrue(status.count > 0)
+                expectation.fulfill()
+            }
+            .store(in: &cancellable)
+        
+        viewModel.detailData.append(firstData)
+        viewModel.detailData.append(secondData)
+        
+        wait(for: [expectation], timeout: 1)
     }
 }
