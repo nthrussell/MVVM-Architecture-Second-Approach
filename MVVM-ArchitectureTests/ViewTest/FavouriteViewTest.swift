@@ -66,17 +66,18 @@ class FavouriteViewTest: XCTestCase {
     }
     
     func test_if_viewModel_detailData_sends_newData_successfully() {
-        let firstData = PokemonDetailModel(
-            height: 6,
-            name: "bulbasaur",
-            sprites: SpritesModel(frontDefault: "https://pokeapi.co/api/v2/pokemon/1/"),
-            weight: 8)
-        
-        let secondData = PokemonDetailModel(
-            height: 4,
-            name: "ivysaur",
-            sprites: SpritesModel(frontDefault: "https://pokeapi.co/api/v2/pokemon/2/"),
-            weight: 5)
+        let detailData = [
+            PokemonDetailModel(
+                height: 5,
+                name: "test1",
+                sprites: SpritesModel(frontDefault: "https://pokeapi.co/api/v2/pokemon/1/"),
+                weight: 3),
+            PokemonDetailModel(
+                height: 4,
+                name: "test2",
+                sprites: SpritesModel(frontDefault: "https://pokeapi.co/api/v2/pokemon/2/"),
+                weight: 6)
+        ]
         
         let expectation = XCTestExpectation(description: "Received New PokemonDetailModel data")
         
@@ -88,9 +89,8 @@ class FavouriteViewTest: XCTestCase {
             }
             .store(in: &cancellable)
         
-        viewModel.detailData.append(firstData)
-        viewModel.detailData.append(secondData)
-        
+        viewModel.detailData.append(contentsOf: detailData)
+
         wait(for: [expectation], timeout: 1)
     }
 }
