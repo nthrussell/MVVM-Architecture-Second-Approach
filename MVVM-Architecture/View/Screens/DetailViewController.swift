@@ -14,7 +14,6 @@ class DetailViewController: UIViewController {
     var detailView: DetailView!
     var viewModel: DetailViewModel!
     
-    var cancellable = Set<AnyCancellable>()
         
     init(url: String) {
         self.url = url
@@ -28,13 +27,11 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        Loader.show()
-        viewModel = DetailViewModel(url: url)
-        
-        observeData()
+        Loader.show()        
     }
     
     override func loadView() {
+        viewModel = DetailViewModel(url: url)
         detailView = DetailView(viewModel: viewModel)
         self.view = detailView
     }
@@ -46,20 +43,5 @@ class DetailViewController: UIViewController {
     override var hidesBottomBarWhenPushed: Bool {
         get { navigationController?.visibleViewController == self }
         set { super.hidesBottomBarWhenPushed = newValue }
-    }
-    
-    func observeData() {
-        viewModel
-            .$data
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                guard let self else { return }
-                if let data = result {
-                    detailView.updateUI(data: data)
-                    let value = viewModel.checkIfFavourite(data: data)
-                    detailView.favouriteButton.isSelected = value
-                }
-            }
-            .store(in: &cancellable)
     }
 }

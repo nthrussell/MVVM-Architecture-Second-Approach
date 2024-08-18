@@ -7,23 +7,18 @@
 
 import UIKit
 import CoreData
-import Combine
 
 class FavouriteViewController: UIViewController {
 
     var favouriteView: FavouriteView!
-    var viewModel = FavouriteViewModel()
-    
-    var cancellable = Set<AnyCancellable>()
-    
+    var viewModel: FavouriteViewModel!
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         navigationController?.navigationBar.topItem?.title = "My Favourites"
-        
-        observeDetailData()
-                
+                        
         let didSaveNotification = NSManagedObjectContext.didSaveObjectsNotification
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(didNewEntrySaved),
@@ -32,19 +27,9 @@ class FavouriteViewController: UIViewController {
     }
     
     override func loadView() {
+        viewModel = FavouriteViewModel()
         favouriteView = FavouriteView(viewModel: viewModel)
         self.view = favouriteView
-    }
-    
-    func observeDetailData() {
-        viewModel
-            .$detailData
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                guard let self else { return }
-                favouriteView.tableView.reloadData()
-            }
-            .store(in: &cancellable)
     }
     
     @objc func didNewEntrySaved() {

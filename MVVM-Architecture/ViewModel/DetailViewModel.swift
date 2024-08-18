@@ -33,9 +33,9 @@ class DetailViewModel {
             .receive(on: DispatchQueue.main)
             .sink { status in
                 debugPrint("status is:\(status)")
-            } receiveValue: { [weak self] data in
+            } receiveValue: { [weak self] payload in
                 guard let self = self else { return }
-                self.data = data
+                data = payload
                 Loader.hide()
             }
             .store(in: &cancellable)

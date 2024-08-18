@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class FavouriteView: UIView {
     
@@ -19,6 +20,7 @@ class FavouriteView: UIView {
     }()
     
     var viewModel: FavouriteViewModel!
+    var cancellable = Set<AnyCancellable>()
     
     init(frame: CGRect = .zero, viewModel: FavouriteViewModel) {
         self.viewModel = viewModel
@@ -42,6 +44,19 @@ class FavouriteView: UIView {
             tableView.rightAnchor.constraint(equalTo: rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+}
+
+extension FavouriteView {
+    func observeDetailData() {
+        viewModel
+            .$detailData
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self else { return }
+                tableView.reloadData()
+            }
+            .store(in: &cancellable)
     }
 }
 

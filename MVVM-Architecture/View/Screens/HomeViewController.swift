@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    let viewModel = HomeViewModel()
+    var viewModel: HomeViewModel!
     var homeView: HomeView!
     
     override func viewDidLoad() {
@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
     }
     
     override func loadView() {
+        viewModel = HomeViewModel()
         homeView = HomeView(viewModel: viewModel)
         self.view = homeView
     }

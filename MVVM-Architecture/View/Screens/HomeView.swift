@@ -73,6 +73,14 @@ class HomeView: UIView {
         ])
     }
     
+    func reloadTebleView() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+}
+
+extension HomeView {
     func bindPokemonList() {
         viewModel
             .$pokemonList
@@ -96,12 +104,6 @@ class HomeView: UIView {
             }
             .store(in: &cancellable)
 
-    }
-    
-    func reloadTebleView() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
     }
 }
 
@@ -148,6 +150,6 @@ extension HomeView: UITableViewDelegate {
 
 extension HomeView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange textSearched: String) {
-        viewModel.filterData(with: textSearched)
+        viewModel.searchText = textSearched
     }
 }

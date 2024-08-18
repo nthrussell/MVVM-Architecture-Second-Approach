@@ -13,6 +13,7 @@ class HomeViewModel {
     
     @Published var pokemonList: [PokemonList] = [PokemonList]()
     @Published var filteredData: [PokemonList] = [PokemonList]()
+    @Published var searchText: String = ""
     
     var isFiltering: Bool {
         filteredData.count > 0
@@ -24,6 +25,7 @@ class HomeViewModel {
         self.homeApiService = homeApiService
         
         callApi()
+        search()
     }
     
     func callApi() {
@@ -68,5 +70,17 @@ class HomeViewModel {
         filteredData = pokemonList.filter {
             $0.name.lowercased().contains(textSearched.lowercased().trimmingCharacters(in: .whitespaces))
         }
+    }
+    
+    func search() {
+        print("search text is from vm:\(searchText)")
+        $searchText
+            .sink { [weak self] searchText in
+                guard let self = self else { return }
+                filteredData = pokemonList.filter {
+                    $0.name.lowercased().contains(searchText.lowercased().trimmingCharacters(in: .whitespaces))
+                }
+            }
+            .store(in: &cancellable)
     }
 }

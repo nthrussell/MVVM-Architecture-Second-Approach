@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class DetailView: UIView {
     private(set) lazy var containerView: UIView = {
@@ -58,6 +59,7 @@ class DetailView: UIView {
     }()
     
     var viewModel: DetailViewModel!
+    var cancellable = Set<AnyCancellable>()
     
     init(frame: CGRect = .zero, viewModel: DetailViewModel) {
         self.viewModel = viewModel
@@ -73,6 +75,7 @@ class DetailView: UIView {
         containerView.addSubview(favouriteButton)
         
         setupLayout()
+        observeData()
     }
     
     required init?(coder: NSCoder) {
@@ -86,11 +89,10 @@ class DetailView: UIView {
         if let url = data.sprites.frontDefault, (url != "") {
             imageView.getImage(from: URL(string: url)!)
         }
+        
         favouriteButton.isHidden = false
-    }
-    
-    func updateImage(image: UIImage) {
-        imageView.image = image
+        let value = viewModel.checkIfFavourite(data: data)
+        favouriteButton.isSelected = value
     }
     
     func setupLayout() {
@@ -132,9 +134,24 @@ class DetailView: UIView {
     
     @objc
     func tapAction() {
-        favouriteButton.isSelected.toggle()
         if let data = viewModel.data {
-            viewModel.saveOrDelete(data: data)
+            self.viewModel.saveOrDelete(data: data)
+            self.favouriteButton.isSelected.toggle()
         }
+    }
+}
+
+extension DetailView {
+    func observeData() {
+        viewModel
+            .$data
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] result in
+                guard let self else { return }
+                if let data = result {
+                    updateUI(data: data)
+                }
+            }
+            .store(in: &cancellable)
     }
 }
