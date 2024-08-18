@@ -15,6 +15,26 @@ class HomeViewModel {
     @Published var filteredData: [PokemonList] = [PokemonList]()
     @Published var searchText: String = ""
     
+    private lazy var hasPokemonList: AnyPublisher<Bool, Never> = {
+        $pokemonList
+            .map { $0.count > 0 }
+            .eraseToAnyPublisher()
+    }()
+    
+    private lazy var hasFilteredData: AnyPublisher<Bool, Never> = {
+        $filteredData
+            .map { $0.count > 0 }
+            .eraseToAnyPublisher()
+    }()
+    
+    lazy var reloadtableView: AnyPublisher<Bool, Never> = {
+        Publishers.CombineLatest(
+            hasPokemonList, hasFilteredData
+        )
+        .map { $0 || $1 }
+        .eraseToAnyPublisher()
+    }()
+    
     var isFiltering: Bool {
         filteredData.count > 0
     }
@@ -73,7 +93,6 @@ class HomeViewModel {
     }
     
     func search() {
-        print("search text is from vm:\(searchText)")
         $searchText
             .sink { [weak self] searchText in
                 guard let self = self else { return }

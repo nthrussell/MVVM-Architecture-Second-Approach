@@ -47,9 +47,7 @@ class HomeView: UIView {
         addSubview(tableView)
         
         setupLayout()
-        
-        bindPokemonList()
-        bindFilteredData()
+        reloadTableView()
     }
     
     required init?(coder: NSCoder) {
@@ -81,22 +79,9 @@ class HomeView: UIView {
 }
 
 extension HomeView {
-    func bindPokemonList() {
+    func reloadTableView() {
         viewModel
-            .$pokemonList
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] result in
-                guard let self else { return }
-                if result.count > 0 {
-                    tableView.reloadData()
-                }
-            }
-            .store(in: &cancellable)
-    }
-    
-    func bindFilteredData() {
-        viewModel
-            .$filteredData
+            .reloadtableView
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 guard let self else { return }
