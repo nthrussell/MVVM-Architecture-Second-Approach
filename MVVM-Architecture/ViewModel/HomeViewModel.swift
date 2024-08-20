@@ -86,12 +86,6 @@ class HomeViewModel {
         }
     }
     
-    func filterData(with textSearched: String) {
-        filteredData = pokemonList.filter {
-            $0.name.lowercased().contains(textSearched.lowercased().trimmingCharacters(in: .whitespaces))
-        }
-    }
-    
     func search() {
         $searchText
             .sink { [weak self] searchText in
