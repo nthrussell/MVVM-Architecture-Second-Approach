@@ -56,13 +56,7 @@ class HomeViewTest: XCTestCase {
     }
     
     func test_tableView_reloading() {
-        let pokemonList = [
-            PokemonList(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/6/"),
-            PokemonList(name: "ivysaur", url: "https://pokeapi.co/api/v2/pokemon/7/"),
-            PokemonList(name: "venusaur", url: "https://pokeapi.co/api/v2/pokemon/8/"),
-            PokemonList(name: "charmander", url: "https://pokeapi.co/api/v2/pokemon/9/"),
-            PokemonList(name: "charizard", url: "https://pokeapi.co/api/v2/pokemon/10/")
-        ]
+        let newData = PokemonList(name: "charizard", url: "https://pokeapi.co/api/v2/pokemon/10/")
         
         let expectation = XCTestExpectation(description: "tableView reload successfully")
         
@@ -76,6 +70,6 @@ class HomeViewTest: XCTestCase {
                 
         wait(for: [expectation], timeout: 1)
         
-        viewModel.filteredData = pokemonList
+        viewModel.filteredData.append(newData)
     }
 }
