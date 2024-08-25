@@ -112,7 +112,7 @@ class HomeViewModelTest: XCTestCase {
         ]
         sut.pokemonList = pokemonList
         
-        let _ = sut.filterData(with: "char")
+        sut.searchText = "char"
         
         XCTAssertEqual(sut.filteredData.count, 2)
     }

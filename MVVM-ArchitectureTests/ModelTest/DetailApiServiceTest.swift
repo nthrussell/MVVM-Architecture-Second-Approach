@@ -35,8 +35,7 @@ class DetailApiServiceTest: XCTestCase {
         apiService
             .fetchDetail(with: url)
             .sink { _ in }
-             receiveValue: { [weak self] detailModel in
-                 guard let self else { return }
+             receiveValue: { detailModel in
                  XCTAssertEqual(detailModel.name, "caterpie")
                  XCTAssertEqual(detailModel.height, 3)
                  XCTAssertEqual(detailModel.weight, 29)

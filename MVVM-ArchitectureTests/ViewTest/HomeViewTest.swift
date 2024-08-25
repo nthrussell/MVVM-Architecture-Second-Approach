@@ -17,8 +17,8 @@ class HomeViewTest: XCTestCase {
     var cancellable = Set<AnyCancellable>()
 
     override func setUpWithError() throws {
-        let homeApiServiceStub = HomeApiServiceStub(returning: .success(try DecodedPokemonList.SuccessModel()))
         
+        let homeApiServiceStub = HomeApiServiceStub(returning: .success(try DecodedPokemonList.SuccessModel()))
         viewModel = HomeViewModel(homeApiService: homeApiServiceStub)
         sut = HomeView(viewModel: viewModel)
         
@@ -73,9 +73,9 @@ class HomeViewTest: XCTestCase {
                 expectation.fulfill()
             }
             .store(in: &cancellable)
+                
+        wait(for: [expectation], timeout: 1)
         
         viewModel.filteredData = pokemonList
-        
-        wait(for: [expectation], timeout: 1)
     }
 }

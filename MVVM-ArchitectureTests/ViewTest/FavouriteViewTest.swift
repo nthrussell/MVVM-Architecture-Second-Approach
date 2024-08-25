@@ -89,8 +89,8 @@ class FavouriteViewTest: XCTestCase {
             }
             .store(in: &cancellable)
         
-        viewModel.detailData.append(contentsOf: detailData)
-
         wait(for: [expectation], timeout: 1)
+        
+        viewModel.detailData.append(contentsOf: detailData)
     }
 }

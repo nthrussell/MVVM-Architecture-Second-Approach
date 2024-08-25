@@ -106,13 +106,13 @@ class DetailViewTest: XCTestCase {
             }
             .store(in: &cancellable)
         
+        wait(for: [expectation], timeout: 1)
+        
         viewModel.data = detailModelData
         
         XCTAssertEqual(sut.nameLabel.text, "arcanine")
         XCTAssertEqual(sut.heightlabel.text, "height: \(detailModelData.height) cm")
         XCTAssertEqual(sut.weightlabel.text, "weight: \(detailModelData.weight) gm")
         XCTAssertEqual(sut.favouriteButton.isHidden, false)
-        
-        wait(for: [expectation], timeout: 1)
     }
 }
