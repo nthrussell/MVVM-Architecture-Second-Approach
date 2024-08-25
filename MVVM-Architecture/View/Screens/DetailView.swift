@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class DetailView: UIView {
+class DetailView: BindView<DetailViewModel> {
     private(set) lazy var containerView: UIView = {
        let view = UIView()
         view.backgroundColor = .white
@@ -58,12 +58,9 @@ class DetailView: UIView {
         return button
     }()
     
-    var viewModel: DetailViewModel!
     var cancellable = Set<AnyCancellable>()
     
-    init(frame: CGRect = .zero, viewModel: DetailViewModel) {
-        self.viewModel = viewModel
-        super.init(frame: frame)
+    override func setupViews() {
         backgroundColor = .white
         
         addSubview(containerView)
@@ -74,12 +71,7 @@ class DetailView: UIView {
         containerView.addSubview(weightlabel)
         containerView.addSubview(favouriteButton)
         
-        setupLayout()
         observeData()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     func updateUI(data: PokemonDetailModel) {
@@ -95,7 +87,7 @@ class DetailView: UIView {
         favouriteButton.isSelected = value
     }
     
-    func setupLayout() {
+    override func setupLayouts() {
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             containerView.leftAnchor.constraint(equalTo: leftAnchor),

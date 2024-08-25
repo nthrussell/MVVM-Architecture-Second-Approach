@@ -20,7 +20,7 @@ class HomeViewTest: XCTestCase {
         
         let homeApiServiceStub = HomeApiServiceStub(returning: .success(try DecodedPokemonList.SuccessModel()))
         viewModel = HomeViewModel(homeApiService: homeApiServiceStub)
-        sut = HomeView(viewModel: viewModel)
+        sut = HomeView(with: viewModel)
         
         let pokemonList = [
             PokemonList(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/"),

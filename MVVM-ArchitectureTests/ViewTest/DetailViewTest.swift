@@ -37,7 +37,7 @@ class DetailViewTest: XCTestCase {
         
         viewModel = DetailViewModel(url: "", detailApiService: detailApiServiceStub,  detailStorageService: mockStorageService)
         
-        sut = DetailView(viewModel: viewModel)
+        sut = DetailView(with: viewModel)
     }
     
     override func tearDownWithError() throws {

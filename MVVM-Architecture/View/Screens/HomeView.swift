@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class HomeView: UIView {
+class HomeView: BindView<HomeViewModel> {
     private(set) lazy var searchBar:UISearchBar = {
         let searchbar = UISearchBar()
         searchbar.searchBarStyle = .default
@@ -33,28 +33,19 @@ class HomeView: UIView {
         return aiView
     }()
     
-    var viewModel: HomeViewModel!
     var onTap: ((_ url:String) -> Void)?
-    
     var cancellable = Set<AnyCancellable>()
-
-    init(frame: CGRect = .zero, viewModel: HomeViewModel) {
-        self.viewModel = viewModel
-        super.init(frame: frame)
+    
+    override func setupViews() {
         backgroundColor = .white
         
         addSubview(searchBar)
         addSubview(tableView)
         
-        setupLayout()
         reloadTableView()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupLayout() {
+    override func setupLayouts() {
         
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),

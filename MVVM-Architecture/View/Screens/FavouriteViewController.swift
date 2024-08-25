@@ -8,16 +8,15 @@
 import UIKit
 import CoreData
 
-class FavouriteViewController: UIViewController {
-
-    var favouriteView: FavouriteView!
-    var viewModel: FavouriteViewModel!
+class FavouriteViewController: BindViewController<FavouriteView, FavouriteViewModel> {
         
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         navigationController?.navigationBar.topItem?.title = "My Favourites"
+        
+        viewModel.getAllFavourites()
                         
         let didSaveNotification = NSManagedObjectContext.didSaveObjectsNotification
         NotificationCenter.default.addObserver(self,
@@ -26,14 +25,8 @@ class FavouriteViewController: UIViewController {
                                                object: nil)
     }
     
-    override func loadView() {
-        viewModel = FavouriteViewModel()
-        favouriteView = FavouriteView(viewModel: viewModel)
-        self.view = favouriteView
-    }
-    
     @objc func didNewEntrySaved() {
         viewModel.getAllFavourites()
-        favouriteView.tableView.reloadData()
+        rootView.tableView.reloadData()
     }
 }

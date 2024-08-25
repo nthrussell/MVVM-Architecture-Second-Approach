@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class FavouriteView: UIView {
+class FavouriteView: BindView<FavouriteViewModel> {
     
     private(set) lazy var tableView:UITableView = {
         let tableView = UITableView()
@@ -19,25 +19,16 @@ class FavouriteView: UIView {
         return tableView
     }()
     
-    var viewModel: FavouriteViewModel!
     var cancellable = Set<AnyCancellable>()
     
-    init(frame: CGRect = .zero, viewModel: FavouriteViewModel) {
-        self.viewModel = viewModel
-        super.init(frame: frame)
+    override func setupViews() {
         backgroundColor = .white
         
         addSubview(tableView)
-        
-        setupLayout()
+        observeDetailData()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupLayout() {
-        
+    override func setupLayouts() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             tableView.leftAnchor.constraint(equalTo: leftAnchor),
@@ -62,7 +53,6 @@ extension FavouriteView {
 
 extension FavouriteView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let viewModel = viewModel else { return 0 }
         return viewModel.detailData.count
     }
     
@@ -72,7 +62,6 @@ extension FavouriteView: UITableViewDataSource {
             for: indexPath
         ) as! FavouriteViewCell
         
-        guard let viewModel = viewModel else { return cell }
         let data = viewModel.detailData[indexPath.row]
         
         if let url = data.sprites.frontDefault, (url != "") {
@@ -91,7 +80,6 @@ extension FavouriteView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            guard let viewModel = viewModel else { return }
             let data = viewModel.detailData[indexPath.row]
             viewModel.deleteFavourite(data: data)
         }

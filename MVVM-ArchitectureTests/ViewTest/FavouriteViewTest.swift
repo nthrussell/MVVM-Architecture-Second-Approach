@@ -19,7 +19,7 @@ class FavouriteViewTest: XCTestCase {
     override func setUpWithError() throws {
         mockStorageService = MockFavouriteStorageService()
         viewModel = FavouriteViewModel(favouriteStorageService: mockStorageService)
-        sut = FavouriteView(viewModel: viewModel)
+        sut = FavouriteView(with: viewModel)
 
         let detailData = [
             PokemonDetailModel(

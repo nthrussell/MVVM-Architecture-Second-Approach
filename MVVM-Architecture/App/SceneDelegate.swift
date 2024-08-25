@@ -23,9 +23,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.tintColor = .purple
         
-        let firstVC = BaseNavigationController(rootViewController: HomeViewController())
-        let secondVC = BaseNavigationController(rootViewController: FavouriteViewController())
-
+        let homeViewModel = HomeViewModel()
+        let homeView = HomeView(with: homeViewModel)
+        let homeViewController = HomeViewController(with: homeView, and: homeViewModel)
+        
+        let favouriteViewModel = FavouriteViewModel()
+        let favouriteView = FavouriteView(with: favouriteViewModel)
+        let favouriteViewController = FavouriteViewController(with: favouriteView, and: favouriteViewModel)
+        
+        let firstVC = BaseNavigationController(rootViewController: homeViewController)
+        let secondVC = BaseNavigationController(rootViewController: favouriteViewController)
+        
         firstVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
         secondVC.tabBarItem = UITabBarItem(title: "Favourite", image: UIImage(systemName: "star"), tag: 1)
         

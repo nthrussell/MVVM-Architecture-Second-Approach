@@ -7,10 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
-    
-    var homeView: HomeView!
-    var viewModel: HomeViewModel!
+class HomeViewController: BindViewController<HomeView, HomeViewModel> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,20 +16,16 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.topItem?.title = "Pokedex"
     }
     
-    override func loadView() {
-        viewModel = HomeViewModel()
-        homeView = HomeView(viewModel: viewModel)
-        self.view = homeView
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         navigate()
     }
     
     func navigate() {
-        homeView.onTap = { [weak self] url in
+        rootView.onTap = { [weak self] url in
             guard let self = self else { return }
-            let vc = DetailViewController(url: url)
+            let viewModel = DetailViewModel(url: url)
+            let view = DetailView(with: viewModel)
+            let vc = DetailViewController(with: view, and: viewModel)
             navigationController?.pushViewController(vc, animated: true)
         }
     }
